@@ -6,7 +6,9 @@ import './Project.sol';
 
 contract Crowdfunding{
 
-// [] Anyone can start a funding project .
+// [X] Anyone can start a funding project .
+// [X] Get All project list
+// [] Filter projects
 
 event projectStarted(
     address projectContractAddress ,
@@ -22,9 +24,36 @@ event projectStarted(
 
  Project[] private projects;
 
- function createProject() public {
+ function createProject(
+    uint256 minimumContribution,
+    uint256 deadline,
+    uint256 targetContribution,
+    string memory projectTitle,
+    string memory projectDesc
+ ) public {
+
+   deadline = block.timestamp+deadline;
+
+   Project newProject = new Project(msg.sender,minimumContribution,deadline,targetContribution,projectTitle,projectDesc);
+   projects.push(newProject);
+ 
+ emit projectStarted(
+    address(newProject) ,
+    msg.sender,
+    minimumContribution,
+    deadline,
+    targetContribution,
+    0,
+    0,
+    projectTitle,
+    projectDesc
+ );
 
  }
+
+function returnAllProjects() external view returns(Project[] memory){
+   return projects;
+}
 
 }
 

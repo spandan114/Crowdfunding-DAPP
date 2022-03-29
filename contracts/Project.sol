@@ -7,7 +7,7 @@ import "hardhat/console.sol";
 // [X] End project if targeted contribution amount reached
 // [X] Expire project if raised amount not fullfill between deadline
 //    & return donated amount to all contributor .
-// [] Owner need to request contributers for withdraw amount.
+// [X] Owner need to request contributers for withdraw amount.
 // [] Owner can withdraw amount if 50% contributors agree
 
 contract Project{
@@ -43,6 +43,9 @@ contract Project{
     State public state = State.Fundraising; 
 
     mapping (address => uint) public contributiors;
+    mapping (uint256 => WithdrawRequest) public withdrawRequests;
+
+    uint256 numOfWithdrawRequests = 0;
 
     // Modifiers
     modifier isCreator(){
@@ -60,6 +63,15 @@ contract Project{
 
     // Event that will be emitted whenever funding will be received
     event FundingReceived(address contributor, uint amount, uint currentTotal);
+    // Event that will be emitted whenever withdraw request created
+    event WithdrawRequestCreated(
+        uint256 requestId,
+        string description,
+        uint256 amount,
+        uint256 noOfVotes,
+        bool isCompleted,
+        address reciptent
+    );
     // Event that will be emitted whenever contributor vote for withdraw request
     event WithdrawVote(address contributor, uint amount, uint currentTotal);
 
@@ -127,5 +139,19 @@ contract Project{
         return true;
     }
 
+    // @dev Request contributor for withdraw amount
+    // @return boolean
+   
+    function createWithdrawRequest(string memory _description,uint256 _amount,address payable _reciptent) public isCreator() {
+        WithdrawRequest storage newRequest = withdrawRequests[numOfWithdrawRequests];
+        numOfWithdrawRequests++;
 
+        newRequest.description = _description;
+        newRequest.amount = _amount;
+        newRequest.noOfVotes = 0;
+        newRequest.isCompleted = false;
+        newRequest.reciptent = _reciptent;
+
+        emit WithdrawRequestCreated(numOfWithdrawRequests,_description, _amount,0,false,_reciptent );
+    }
 }

@@ -3,12 +3,12 @@ pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
 
-// [] Anyone can contribute
-// [] End project if targeted contribution amount reached
-// [] Expire project if raised amount not fullfill between deadline
+// [X] Anyone can contribute
+// [X] End project if targeted contribution amount reached
+// [X] Expire project if raised amount not fullfill between deadline
 //    & return donated amount to all contributor .
-// [] Owner can request contributer before withdraw amount
-// [] Withdraw amount if 50% contributor agree
+// [] Owner need to request contributers for withdraw amount.
+// [] Owner can withdraw amount if 50% contributors agree
 
 contract Project{
 
@@ -19,15 +19,27 @@ contract Project{
         Successful
     }
 
+    // Structs
+
+    struct WithdrawRequest{
+        string description;
+        uint256 amount;
+        uint256 noOfVotes;
+        mapping(address => uint256) voters;
+        bool isCompleted;
+        address payable reciptent;
+    }
+
     // Variables
     address payable public creator;
-    uint256 minimumContribution;
-    uint256 deadline;
-    uint256 targetContribution; // required to reach at least this much amount
+    uint256 public minimumContribution;
+    uint256 public  deadline;
+    uint256 public targetContribution; // required to reach at least this much amount
     uint public completeAt;
-    uint256 raisedAmount; // Total raised amount till now
-    string projectTitle;
-    string projectDes;
+    uint256 public raisedAmount; // Total raised amount till now
+    uint256 public noOfContributers;
+    string public projectTitle;
+    string public projectDes;
     State public state = State.Fundraising; 
 
     mapping (address => uint) public contributiors;
@@ -44,6 +56,15 @@ contract Project{
         _;
     }
 
+    // Events
+
+    // Event that will be emitted whenever funding will be received
+    event FundingReceived(address contributor, uint amount, uint currentTotal);
+    // Event that will be emitted whenever contributor vote for withdraw request
+    event WithdrawVote(address contributor, uint amount, uint currentTotal);
+
+    // @dev Create project
+    // @return null
 
    constructor(
        address _creator,
@@ -62,13 +83,49 @@ contract Project{
        raisedAmount = 0;
    }
 
+    // @dev Anyone can contribute
+    // @return null
 
- function contribute() public validateExpiry(State.Fundraising) payable {
-     require(msg.value >= minimumContribution,'Contribution amount is too low !');
+    function contribute() public validateExpiry(State.Fundraising) payable {
+        require(msg.value >= minimumContribution,'Contribution amount is too low !');
+        if(contributiors[msg.sender] == 0){
+            noOfContributers++;
+        }
+        contributiors[msg.sender] += msg.value;
+        raisedAmount += msg.value;
+        emit FundingReceived(msg.sender,msg.value,raisedAmount);
+        checkFundingCompleteOrExpire();
+    }
 
-     if(contributiors[msg.sender] == 0){
-         
-     }
- }
+    // @dev complete or expire funding
+    // @return null
+
+    function checkFundingCompleteOrExpire() internal {
+        if(raisedAmount >= targetContribution){
+            state = State.Successful; 
+        }else if(block.timestamp > deadline){
+            state = State.Expired; 
+        }
+        completeAt = block.timestamp;
+    }
+
+    // @dev Get contract current balance
+    // @return uint 
+
+    function getContractBalance() public view returns(uint256){
+        return address(this).balance;
+    }
+
+    // @dev Request refunt if funding expired
+    // @return boolean
+
+    function requestRefund() public validateExpiry(State.Expired) returns(bool) {
+        require(contributiors[msg.sender] > 0,'You dont have any contributed amount !');
+        address payable user = payable(msg.sender);
+        user.transfer(contributiors[msg.sender]);
+        contributiors[msg.sender] = 0;
+        return true;
+    }
+
 
 }

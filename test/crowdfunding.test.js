@@ -1,6 +1,5 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
-var fs =require("fs");
 
 const etherToWei = (n) =>{
   return ethers.utils.parseUnits(n,'ether')
@@ -10,21 +9,17 @@ const dateToUNIX = (date) => {
   return Math.round(new Date(date).getTime() / 1000).toString()
 }
 
-describe("Crowdfunding", async () => {
+describe("Crowdfunding", () => {
 
   var address1; 
   var address2; 
   var crowdfundingContract;
-  var projectContract;
 
   beforeEach(async function () {
     [address1, address2,  ...address] = await ethers.getSigners();
 
     const Crowdfunding = await ethers.getContractFactory("Crowdfunding");
     crowdfundingContract = await Crowdfunding.deploy();
-
-    // const Project = await ethers.getContractFactory("Project");
-    // projectContract = await Project.deploy();
 
   })
 
@@ -56,7 +51,6 @@ describe("Crowdfunding", async () => {
       expect(event.events[0].args.projectDesc).to.equal(projectDesc);
 
     });
-
   })
 
 });

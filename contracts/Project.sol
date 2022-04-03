@@ -182,17 +182,17 @@ contract Project{
 
     function withdrawRequestedAmount(uint256 _requestId) isCreator() validateExpiry(State.Successful) public{
         WithdrawRequest storage requestDetails = withdrawRequests[_requestId];
-        require(requestDetails.isCompleted == false,'Request alredy completed');
-        require(requestDetails.noOfVotes == noOfContributers/2,'Atlease 50% contributor need to vote for this request');
+        require(requestDetails.isCompleted == false,'Request already completed');
+        require(requestDetails.noOfVotes >= noOfContributers/2,'At least 50% contributor need to vote for this request');
         requestDetails.reciptent.transfer(requestDetails.amount);
-        requestDetails.isCompleted == true;
+        requestDetails.isCompleted = true;
 
         emit AmountWithdrawSuccessful(
             _requestId,
             requestDetails.description,
             requestDetails.amount,
             requestDetails.noOfVotes,
-            requestDetails.isCompleted,
+            true,
             requestDetails.reciptent
         );
 

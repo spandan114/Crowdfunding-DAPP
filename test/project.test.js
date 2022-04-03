@@ -71,11 +71,63 @@ describe("Project", () => {
 
     })
 
-    describe("Withdraw request", async function () {
+    describe("Create withdraw request", async function () {
+      it("Should fail if someone else try to request (Only owner can make request) ", async () => {
+        await expect(projectContract.connect(address2).createWithdrawRequest("Testing description",etherToWei('2'),address2.address)).to.be.revertedWith('You dont have access to perform this operation !');
+      })
 
+      it("Withdraw request Should fail if status not equal to Successful ", async () => {
+        await expect(projectContract.connect(address1).createWithdrawRequest("Testing description",etherToWei('2'),address1.address)).to.be.revertedWith('Invalid state');
+      })
+
+      it("Request for withdraw", async () => {
+        await projectContract.connect(address1).contribute({value:etherToWei('12')});
+        const withdrawRequest = await projectContract.connect(address1).createWithdrawRequest("Testing description",etherToWei('2'),address1.address)
+        const event = await withdrawRequest.wait();
+
+        // Test Event
+        expect(event.events.length).to.equal(1);
+        expect(event.events[0].event).to.equal("WithdrawRequestCreated");
+        expect(event.events[0].args.description).to.equal("Testing description");
+        expect(event.events[0].args.amount).to.equal(etherToWei('2'));
+        expect(event.events[0].args.noOfVotes).to.equal(0);
+        expect(event.events[0].args.isCompleted).to.equal(false);
+        expect(event.events[0].args.reciptent).to.equal(address1.address);
+
+      })
     })
 
     describe("Vote for withdraw request", async function () {
+
+      it("Only contributor can vote ", async () => {
+        await projectContract.connect(address1).contribute({value:etherToWei('12')});
+        await projectContract.connect(address1).createWithdrawRequest("Testing description",etherToWei('2'),address1.address)
+        await expect(projectContract.connect(address2).voteWithdrawRequest(0)).to.be.revertedWith('Only contributor can vote !');
+      })
+
+      it("Vote withdraw request", async () => {
+        await projectContract.connect(address1).contribute({value:etherToWei('6')});
+        await projectContract.connect(address2).contribute({value:etherToWei('7')});
+        await projectContract.connect(address1).createWithdrawRequest("Testing description",etherToWei('2'),address1.address)
+        const voteForWithdraw = await projectContract.connect(address2).voteWithdrawRequest(0)
+        const event = await voteForWithdraw.wait();
+
+        // Test Event
+        expect(event.events.length).to.equal(1);
+        expect(event.events[0].event).to.equal("WithdrawVote");
+        expect(event.events[0].args.voter).to.equal(address2.address);
+        expect(Number(event.events[0].args.totalVote)).to.equal(1);
+
+      })
+
+      it("Should fail if request already vote", async () => {
+        await projectContract.connect(address1).contribute({value:etherToWei('6')});
+        await projectContract.connect(address2).contribute({value:etherToWei('7')});
+        await projectContract.connect(address1).createWithdrawRequest("Testing description",etherToWei('2'),address1.address)
+        await projectContract.connect(address2).voteWithdrawRequest(0)
+        
+        await expect(projectContract.connect(address2).voteWithdrawRequest(0)).to.be.revertedWith('You already voted !');
+      })
 
     })
 

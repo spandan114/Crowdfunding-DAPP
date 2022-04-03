@@ -171,7 +171,7 @@ contract Project{
     function voteWithdrawRequest(uint256 _requestId) public {
         require(contributiors[msg.sender] > 0,'Only contributor can vote !');
         WithdrawRequest storage requestDetails = withdrawRequests[_requestId];
-        require(requestDetails.voters[msg.sender] == false,'You alredy voted !');
+        require(requestDetails.voters[msg.sender] == false,'You already voted !');
         requestDetails.voters[msg.sender] = true;
         requestDetails.noOfVotes += 1;
         emit WithdrawVote(msg.sender,requestDetails.noOfVotes);

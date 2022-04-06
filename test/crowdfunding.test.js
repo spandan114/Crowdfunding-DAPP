@@ -51,6 +51,29 @@ describe("Crowdfunding", () => {
       expect(event.events[0].args.projectDesc).to.equal(projectDesc);
 
     });
+
+    it("Get data", async function () {
+
+      const minimumContribution=etherToWei('1');
+      const deadline=dateToUNIX('2022-04-15');
+      const targetContribution=etherToWei('100');
+      const projectTitle='Testing title';
+      const projectDesc='Testing description';
+
+      await crowdfundingContract.connect(address1).createProject(minimumContribution,deadline,targetContribution,projectTitle,projectDesc)
+      const projectList = await crowdfundingContract.returnAllProjects();
+      const contribute = await crowdfundingContract.connect(address1).contribute(projectList[0],{value: etherToWei("4")});
+      
+      const event = await contribute.wait();
+      // Test ContributionReceived event
+      expect(event.events.length).to.equal(2);
+      expect(event.events[1].event).to.equal("ContributionReceived");
+      expect(event.events[1].args.projectAddress).to.equal(projectList[0]);
+      expect(event.events[1].args.contributedAmount).to.equal(etherToWei("4"));
+      expect(event.events[1].args.contributor).to.equal(address1.address);
+
+    })
+
   })
 
 });

@@ -1,12 +1,11 @@
 import Navbar from "./components/Navbar";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
     <div >
       <Navbar/>
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+      <Dashboard/>
     </div>
   );
 }

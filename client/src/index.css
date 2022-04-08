@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body{
+    background: #F7F5F2;
+}
+
+.card{
+    @apply w-full bg-slate-50 p-3 drop-shadow-md rounded-md lg:p-6 ;
+}
+
+.ribbon{
+    @apply absolute top-0 right-0 m-2 py-1 px-2 rounded-md text-sm text-center text-white font-semibold ;
+}
+
+.inner-card{
+    @apply bg-[#8d8daa18] p-3 mx-1 my-6 rounded-sm;
+}
+
+.input{
+    @apply border border-emerald-300 py-2 px-3 rounded-l-md focus:outline-none focus:ring focus:ring-emerald-300 w-full;
+  }
+
+.button{
+    @apply border bg-emerald-500 text-white rounded-r-md px-2 hover:bg-emerald-600 active:bg-emerald-700 focus:outline-none focus:ring focus:ring-emerald-300;
+}
+  
+.progress{
+    @apply bg-[#F56D91] w-full text-xs font-medium text-white text-center p-0.5 leading-none rounded-l-full;
+}

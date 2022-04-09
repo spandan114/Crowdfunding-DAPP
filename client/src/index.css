@@ -19,7 +19,7 @@ button:disabled{
 }
 
 .inner-card{
-    @apply bg-[#8d8daa18] p-3 mx-1 my-6 rounded-sm;
+    @apply bg-[#8d8daa18] p-3 mx-1 rounded-sm;
 }
 
 .input{

@@ -21,13 +21,13 @@ const Dashboard = () => {
               electronic typesetting, remaining essentially unchanged.
             </p>
             <div className="flex flex-col lg:flex-row">
-              <div className="inner-card w-full lg:w-2/5">
+              <div className="inner-card my-6 w-full lg:w-2/5">
                 <p className="text-md font-bold font-sans text-gray">Targeted contribution</p>
                 <p className="text-sm font-bold font-sans text-gray-600 ">100000 ETH </p>
                 <p className="text-md font-bold font-sans text-gray">Deadline</p>
                 <p className="text-sm font-bold font-sans text-gray-600 ">2022-06-17 10:15 PM</p>
               </div>
-              <div className="inner-card w-full lg:w-3/5">
+              <div className="inner-card my-6 w-full lg:w-3/5">
                 <label className="text-sm text-gray-700 font-semibold">Contribution amount :</label>
                 <div className="flex flex-row">
                   <input type="number" placeholder="Type here" className="input rounded-l-md" />

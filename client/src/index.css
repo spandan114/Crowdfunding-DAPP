@@ -6,6 +6,10 @@ body{
     background: #F7F5F2;
 }
 
+button:disabled{
+    @apply opacity-50 cursor-not-allowed;
+}
+
 .card{
     @apply w-full bg-slate-50 p-3 drop-shadow-md rounded-md lg:p-6 ;
 }
@@ -19,8 +23,12 @@ body{
 }
 
 .input{
-    @apply border border-emerald-300 py-2 px-3 rounded-l-md focus:outline-none focus:ring focus:ring-emerald-300 w-full;
+    @apply border border-emerald-300 py-2 px-3 focus:outline-none focus:ring focus:ring-emerald-300 w-full;
   }
+
+.form-control-input{
+    @apply border py-2 px-3 focus:outline-none focus:ring w-full rounded my-1;
+}
 
 .button{
     @apply border bg-emerald-500 text-white rounded-r-md px-2 hover:bg-emerald-600 active:bg-emerald-700 focus:outline-none focus:ring focus:ring-emerald-300;

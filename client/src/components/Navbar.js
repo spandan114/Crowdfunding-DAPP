@@ -35,14 +35,14 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button type="button" className="bg-[#F7C984] p-1 rounded-full text-greay hover:text-greay focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                <span >Wallet address</span>
+                <button type="button" className="p-1 rounded-full text-greay hover:text-greay ">
+                  <span >Wallet address</span>
                 </button>
 
                 {/* <!-- Profile  --> */}
                 <div className="ml-3 relative">
                 <div>
-                    <button type="button" className="bg-[#F7C984] flex text-sm rounded-full focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                    <button type="button" className="bg-[#F7C984] flex text-sm rounded-md focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                     <span className="sr-only">Open user menu</span>
                     <img className="h-8 w-8 rounded-full" src={logo} alt=""/>
                     </button>

@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import { Link } from 'react-router-dom';
 import { Menu } from '../icons/Icons';
 import logo from '../logo.svg'
 
@@ -25,7 +26,7 @@ const Navbar = () => {
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                 <div className="flex space-x-4">
-                    <a href="#" className="bg-[#F7C984] text-greay px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</a>
+                    <Link to="/dashboard" className="bg-[#F7C984] text-greay px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</Link>
 
                     <a href="#" className="text-greay hover:bg-[#F7C984] hover:text-greay px-3 py-2 rounded-md text-sm font-medium">My contribution </a>
 

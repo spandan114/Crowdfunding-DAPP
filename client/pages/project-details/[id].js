@@ -1,5 +1,5 @@
 import React from 'react'
-import authWrapper from '../helper/authWrapper'
+import authWrapper from '../../helper/authWrapper'
 
 const ProjectDetails = () => {
   return (

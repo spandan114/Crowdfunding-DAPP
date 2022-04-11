@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import authWrapper from "../helper/authWrapper";
 
 var projects = [1, 2, 3];
@@ -11,8 +11,8 @@ const Dashboard = () => {
         {projects.map((data, i) => (
           <div className="card relative overflow-hidden my-4" key={i}>
             <div className="ribbon bg-emerald-500">Popular</div>
-            <Link to={`/project-details/${i}`} className="font-sans text-xl text-gray font-semibold hover:text-sky-500 hover:cursor-pointer">
-              Project title
+            <Link href={`/project-details/${i}`} >
+              <h1 className="font-sans text-xl text-gray font-semibold hover:text-sky-500 hover:cursor-pointer">Project title</h1>
             </Link>
             <p className="font-sans text-sm text-stone-800 tracking-tight">
               Lorem Ipsum is simply dummy text of the printing and typesetting

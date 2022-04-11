@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
-import { Link } from 'react-router-dom';
+import Link from "next/link";
 import { Menu } from '../icons/Icons';
-import logo from '../logo.svg'
+// import logo from '../logo.svg'
 
 const Navbar = () => {
 
@@ -26,7 +26,7 @@ const Navbar = () => {
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                 <div className="flex space-x-4">
-                    <Link to="/dashboard" className="bg-[#F7C984] text-greay px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</Link>
+                    <Link href="/dashboard"  ><span className="bg-[#F7C984] text-greay px-3 py-2 rounded-md text-sm font-medium hover:cursor-pointer">Dashboard</span></Link>
 
                     <a href="#" className="text-greay hover:bg-[#F7C984] hover:text-greay px-3 py-2 rounded-md text-sm font-medium">My contribution </a>
 
@@ -45,7 +45,7 @@ const Navbar = () => {
                 <div>
                     <button type="button" className="bg-[#F7C984] flex text-sm rounded-md focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                     <span className="sr-only">Open user menu</span>
-                    <img className="h-8 w-8 rounded-full" src={logo} alt=""/>
+                    <div className="h-8 w-8 rounded-full" ></div>
                     </button>
                 </div>
                 </div>

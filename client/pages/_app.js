@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }) {
       const web3 = await loadWeb3(dispatch)
       const account = await loadAccount(web3,dispatch)
   }
-
+  
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <Component {...pageProps} />

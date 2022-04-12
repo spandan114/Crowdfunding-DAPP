@@ -1,9 +1,11 @@
-import React,{useState} from 'react'
+import {useState} from 'react'
 import Link from "next/link";
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
 
     const [openMenu,setOpenMenu] = useState(false);
+    const account = useSelector(state=>state.web3Reducer.account)
 
   return (
     <div>
@@ -34,8 +36,8 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button type="button" className="p-1 rounded-full text-greay hover:text-greay ">
-                  <span >Wallet address</span>
+                <button type="button" className="p-1 w-40 truncate rounded-full text-greay hover:text-greay ">
+                  <span >{account}</span>
                 </button>
 
                 {/* <!-- Profile  --> */}

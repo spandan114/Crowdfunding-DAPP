@@ -13,3 +13,10 @@ export const walletAddressLoaded = (address) =>{
         payload:address
     }
 }
+
+export const crowdFundingContractLoaded = (contract) =>{
+    return{
+        type:types.CROWD_FUNDING_CONTRACT_LOADED,
+        payload:contract
+    }
+}

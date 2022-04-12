@@ -1,7 +1,5 @@
 import React,{useState} from 'react'
 import Link from "next/link";
-import { Menu } from '../icons/Icons';
-// import logo from '../logo.svg'
 
 const Navbar = () => {
 
@@ -17,7 +15,7 @@ const Navbar = () => {
                 {/* <!-- Mobile menu button--> */}
                 <button type="button" className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-greay hover:bg-[#F7C984] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false" onClick={()=>setOpenMenu(!openMenu)}>
                 <span className="sr-only">Open main menu</span>
-                  <Menu/>
+                <i className="fa-solid fa-bars"></i>
                 </button>
             </div>
             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">

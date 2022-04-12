@@ -20,7 +20,27 @@ export const web3Reducer = (state = initialState, action) => {
   }
 };
 
+export const fundingReducer = (state = initialState, action) => {
+  // eslint-disable-next-line default-case
+  switch (action.type) {
+
+    default:
+      return state;
+  }
+};
+
+export const projectReducer = (state = initialState, action) => {
+  // eslint-disable-next-line default-case
+  switch (action.type) {
+
+    default:
+      return state;
+  }
+};
+
 
 export default combineReducers({
-    web3Reducer
+    web3Reducer,
+    fundingReducer,
+    projectReducer
   });

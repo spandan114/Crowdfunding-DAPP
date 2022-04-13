@@ -31,15 +31,15 @@ contract Project{
     }
 
     // Variables
-    address payable public creator;
+    address payable creator;
     uint256 public minimumContribution;
-    uint256 public  deadline;
-    uint256 public targetContribution; // required to reach at least this much amount
-    uint public completeAt;
-    uint256 public raisedAmount; // Total raised amount till now
+    uint256  deadline;
+    uint256 targetContribution; // required to reach at least this much amount
+    uint completeAt;
+    uint256 raisedAmount; // Total raised amount till now
     uint256 public noOfContributers;
-    string public projectTitle;
-    string public projectDes;
+    string projectTitle;
+    string projectDes;
     State public state = State.Fundraising; 
 
     mapping (address => uint) public contributiors;
@@ -196,6 +196,31 @@ contract Project{
             requestDetails.reciptent
         );
 
+    }
+
+    // @dev Get contract details
+    // @return all the project's details
+
+    function getProjectDetails() public view returns(
+    address payable projectStarter,
+    uint256 minContribution,
+    uint256  projectDeadline,
+    uint256 goalAmount, 
+    uint completedTime,
+    uint256 currentAmount, 
+    string memory title,
+    string memory desc,
+    State currentState  
+    ){
+        projectStarter=creator;
+        minContribution=minimumContribution;
+        projectDeadline=deadline;
+        goalAmount=targetContribution;
+        completedTime=completeAt;
+        currentAmount=raisedAmount;
+        title=projectTitle;
+        desc=projectDes;
+        currentState=state;
     }
 
 }

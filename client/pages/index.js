@@ -11,6 +11,7 @@ export default function Home() {
   async function connect() {
     try {
       await activate(injected)
+      router.push("/dashboard")
     } catch (ex) {
       console.log(ex)
     }

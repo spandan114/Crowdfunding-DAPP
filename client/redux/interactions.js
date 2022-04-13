@@ -1,6 +1,7 @@
 import Web3 from "web3";
 import * as actions from "./actions";
 import CrowdFunding from '../artifacts/contracts/Crowdfunding.sol/Crowdfunding.json'
+import Project from '../artifacts/contracts/Project.sol/Project.json'
 
 const crowdFundingContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
@@ -30,9 +31,17 @@ export const loadCrowdFundingContract = async(web3,dispatch) =>{
 
 export const startFundRaising = async(CrowdFundingContract,minimumContribution,deadline,targetContribution,projectTitle,projectDesc,account,dispatch) =>{
 
-  console.log(CrowdFundingContract)
-
   await CrowdFundingContract.methods.createProject(minimumContribution,deadline,targetContribution,projectTitle,projectDesc).send({from:account})
   // dispatch(actions.crowdFundingContractLoaded(crowdFunding));
   // return crowdFunding;
+}
+
+export const getAllFunding = async(CrowdFundingContract,web3,dispatch) =>{
+   const fundingProjectList = await CrowdFundingContract.methods.returnAllProjects().call()
+
+   fundingProjectList.map(async (data)=>{
+    var projectConnector = new web3.eth.Contract(Project.abi,data);
+    const details = await projectConnector.methods.getProjectDetails().call()
+    console.log(details)
+   })
 }

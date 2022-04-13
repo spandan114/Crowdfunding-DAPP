@@ -27,3 +27,12 @@ export const loadCrowdFundingContract = async(web3,dispatch) =>{
   dispatch(actions.crowdFundingContractLoaded(crowdFunding));
   return crowdFunding;
 }
+
+export const startFundRaising = async(CrowdFundingContract,minimumContribution,deadline,targetContribution,projectTitle,projectDesc,account,dispatch) =>{
+
+  console.log(CrowdFundingContract)
+
+  await CrowdFundingContract.methods.createProject(minimumContribution,deadline,targetContribution,projectTitle,projectDesc).send({from:account})
+  // dispatch(actions.crowdFundingContractLoaded(crowdFunding));
+  // return crowdFunding;
+}

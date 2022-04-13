@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import authWrapper from "../helper/authWrapper";
+import FundRiserForm from "../components/FundRiserForm";
 
 var projects = [1, 2, 3];
 
@@ -46,31 +47,7 @@ const Dashboard = () => {
         ))}
       </div>
       <div className="card lg:w-5/12 h-fit my-4">
-          <h1 className="font-sans font-bold text-xl">Start a fund riser fot free</h1>
-          <form>
-            <div className="form-control my-1">
-              <label className="text-sm text-gray-700">Title :</label>
-              <input type="text" placeholder="Type here" className="form-control-input border-neutral-400 focus:ring-neutral-200" />
-            </div>
-            <div className="form-control my-1">
-              <label className="text-sm text-gray-700">Description :</label>
-              <textarea placeholder="Type here" className="form-control-input border-neutral-400 focus:ring-neutral-200" ></textarea>
-            </div>
-            <div className="form-control my-1">
-              <label className="text-sm text-gray-700">Targeted contribution amount :</label>
-              <input type="number" placeholder="Type here" className="form-control-input border-neutral-400 focus:ring-neutral-200" />
-            </div>
-            <div className="form-control my-1">
-              <label className="text-sm text-gray-700">Minimum contribution amount :</label>
-              <input type="number" placeholder="Type here" className="form-control-input border-neutral-400 focus:ring-neutral-200" />
-            </div>
-            <div className="form-control my-1">
-              <label className="text-sm text-gray-700">Deadline :</label>
-              <input type="date" placeholder="Type here" className="form-control-input border-neutral-400 focus:ring-neutral-200" />
-            </div>
-
-            <button className="p-2 w-full bg-[#F56D91] text-white rounded-md hover:bg-[#d15677]" disabled>Contribute</button>
-          </form>
+          <FundRiserForm/>
       </div>
     </div>
   );

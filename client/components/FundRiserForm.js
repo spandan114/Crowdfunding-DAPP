@@ -3,9 +3,9 @@ import moment from 'moment'
 import { startFundRaising } from '../redux/interactions'
 import { useDispatch, useSelector } from 'react-redux'
 import { etherToWei } from '../helper/helper'
+import { toastSuccess,toastError } from '../helper/toastMessage'
 
 const FundRiserForm = () => {
-
 
     const crowdFundingContract = useSelector(state=>state.fundingReducer.contract)
     const account = useSelector(state=>state.web3Reducer.account)
@@ -16,22 +16,38 @@ const FundRiserForm = () => {
     const [targetedContributionAmount,setTargetedContributionAmount] = useState("")
     const [minimumContributionAmount,setMinimumContributionAmount] = useState("")
     const [deadline,setDeadline] = useState("")
+    const [btnLoading,setBtnLoading] = useState(false)
 
     const riseFund = (e) =>{
        e.preventDefault();
+       setBtnLoading(true)
        const unixDate = moment(deadline).valueOf()
-    //    var dateString = moment(unixDate).format("DD/MM/YYYY H:mm");
 
-       startFundRaising(
-           crowdFundingContract,
-           etherToWei(minimumContributionAmount),
-           unixDate,
-           etherToWei(targetedContributionAmount),
-           title,
-           description,
-           account,
-           dispatch
-        )
+       const onSuccess = () =>{
+        setBtnLoading(false)
+        setTitle("")
+        setDescription("")
+        setTargetedContributionAmount("")
+        setMinimumContributionAmount("")
+        setDeadline("")
+        toastSuccess("Fund rising started 🎉");
+      }
+
+       const onError = (error) =>{
+         setBtnLoading(false)
+         toastError(error);
+       }
+
+       const data = {
+        minimumContribution:etherToWei(minimumContributionAmount),
+        deadline:unixDate,
+        targetContribution:etherToWei(targetedContributionAmount),
+        projectTitle:title,
+        projectDesc:description,
+        account:account
+       }
+
+       startFundRaising(crowdFundingContract,data,onSuccess,onError)
     }
 
   return (
@@ -54,12 +70,12 @@ const FundRiserForm = () => {
                 <label className="text-sm text-gray-700">Minimum contribution amount :</label>
                 <input type="number" placeholder="Type here" className="form-control-input border-neutral-400 focus:ring-neutral-200" value={minimumContributionAmount} onChange={(e)=>setMinimumContributionAmount(e.target.value)} required/>
             </div>
-            <div className="form-control my-1">
+            <div className="form-control date-picker my-1">
                 <label className="text-sm text-gray-700">Deadline :</label>
                 <input type="date" placeholder="Type here" className="form-control-input border-neutral-400 focus:ring-neutral-200" value={deadline} onChange={(e)=>setDeadline(e.target.value)} required/>
             </div>
 
-            <button className="p-2 w-full bg-[#F56D91] text-white rounded-md hover:bg-[#d15677]" >Rise fund</button>
+            <button className="p-2 w-full bg-[#F56D91] text-white rounded-md hover:bg-[#d15677]" disabled={btnLoading} >{btnLoading?"Loading...":"Rise fund"}</button>
         </form>
     </>
   )

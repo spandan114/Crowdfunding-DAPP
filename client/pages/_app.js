@@ -1,5 +1,7 @@
 import {useEffect} from 'react'
 import '../styles/globals.css'
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import {wrapper} from '../redux/store'
 import { useDispatch } from 'react-redux';
 import { Web3ReactProvider } from '@web3-react/core'
@@ -29,6 +31,7 @@ function MyApp({ Component, pageProps }) {
   
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
+      <ToastContainer/>
       <Component {...pageProps} />
     </Web3ReactProvider>
   )

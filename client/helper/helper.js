@@ -18,15 +18,17 @@ export const unixToDate = (unixDate) =>{
 
 export const state = ["Fundraising","Expired","Successful"];
 
-export const projectDataFormatter = (data) =>{
+export const projectDataFormatter = (data,contractAddress) =>{
   const formattedData = {
+    address:contractAddress,
     title:data.title,
     description:data.desc,
     minContribution:weiToEther(data.minContribution),
     goalAmount:weiToEther(data.goalAmount),
     currentAmount:weiToEther(data.currentAmount),
     state:state[Number(data.currentState)],
-    deadline:unixToDate(Number(data.projectDeadline))
+    deadline:unixToDate(Number(data.projectDeadline)),
+    progress:(Number(weiToEther(data.currentAmount))/Number(weiToEther(data.goalAmount)))*100
   }
   return formattedData;
 }

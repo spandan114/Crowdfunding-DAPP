@@ -52,10 +52,11 @@ export const getAllFunding = async(CrowdFundingContract,web3,dispatch) =>{
 
    await Promise.all(fundingProjectList.map(async (data)=>{
     var projectConnector = new web3.eth.Contract(Project.abi,data);
+    console.log(projectConnector)
     const details = await projectConnector.methods.getProjectDetails().call()
     projectContracts.push(projectConnector);
 
-    const formattedProjectData = projectDataFormatter(details)
+    const formattedProjectData = projectDataFormatter(details,data)
     projects.push(formattedProjectData)
 
    }))

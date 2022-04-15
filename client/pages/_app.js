@@ -4,13 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import {wrapper} from '../redux/store'
 import { useDispatch } from 'react-redux';
-import { Web3ReactProvider } from '@web3-react/core'
-import Web3 from 'web3'
-import { getAllFunding, loadAccount, loadCrowdFundingContract, loadWeb3 } from '../redux/interactions';
-
-function getLibrary(provider) {
-  return new Web3(provider)
-}
+import { getAllFunding, loadAccount, loadCrowdFundingContract, loadWeb3, subscribeCrowdFundingEvents } from '../redux/interactions';
 
 
 function MyApp({ Component, pageProps }) {
@@ -30,10 +24,10 @@ function MyApp({ Component, pageProps }) {
   }
   
   return (
-    <Web3ReactProvider getLibrary={getLibrary}>
+    <>
       <ToastContainer/>
       <Component {...pageProps} />
-    </Web3ReactProvider>
+    </>
   )
 }
 

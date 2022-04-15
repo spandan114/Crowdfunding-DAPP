@@ -31,15 +31,15 @@ contract Project{
     }
 
     // Variables
-    address payable creator;
+    address payable public creator;
     uint256 public minimumContribution;
-    uint256  deadline;
-    uint256 targetContribution; // required to reach at least this much amount
-    uint completeAt;
-    uint256 raisedAmount; // Total raised amount till now
+    uint256 public deadline;
+    uint256 public targetContribution; // required to reach at least this much amount
+    uint public completeAt;
+    uint256 public raisedAmount; // Total raised amount till now
     uint256 public noOfContributers;
-    string projectTitle;
-    string projectDes;
+    string public projectTitle;
+    string public projectDes;
     State public state = State.Fundraising; 
 
     mapping (address => uint) public contributiors;

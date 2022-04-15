@@ -39,16 +39,17 @@ describe("Crowdfunding", () => {
 
       // Test Event
       expect(event.events.length).to.equal(1);
-      expect(event.events[0].event).to.equal("projectStarted");
+      expect(event.events[0].event).to.equal("ProjectStarted");
       expect(event.events[0].args.projectContractAddress).to.equal(projectList[0]);
       expect(event.events[0].args.creator).to.equal(address1.address);
-      expect(event.events[0].args.minimumContribution).to.equal(minimumContribution);
-      expect(Number(event.events[0].args.deadline)).to.greaterThan(0);
-      expect(event.events[0].args.targetContribution).to.equal(targetContribution);
-      expect(event.events[0].args.raisedAmount).to.equal(0);
+      expect(event.events[0].args.minContribution).to.equal(minimumContribution);
+      expect(Number(event.events[0].args.projectDeadline)).to.greaterThan(0);
+      expect(event.events[0].args.goalAmount).to.equal(targetContribution);
+      expect(event.events[0].args.currentAmount).to.equal(0);
       expect(event.events[0].args.noOfContributors).to.equal(0);
-      expect(event.events[0].args.projectTitle).to.equal(projectTitle);
-      expect(event.events[0].args.projectDesc).to.equal(projectDesc);
+      expect(event.events[0].args.title).to.equal(projectTitle);
+      expect(event.events[0].args.desc).to.equal(projectDesc);
+      expect(event.events[0].args.currentState).to.equal(0);
 
     });
 

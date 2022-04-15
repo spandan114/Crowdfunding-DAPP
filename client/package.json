@@ -9,8 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@web3-react/core": "^6.1.9",
-    "@web3-react/injected-connector": "^6.0.7",
     "moment": "^2.29.2",
     "next": "11.1.2",
     "next-redux-wrapper": "^7.0.5",
@@ -20,7 +18,7 @@
     "react-toastify": "^8.2.0",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
-    "web3": "^1.7.3"
+    "web3": "^1.7.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.4",

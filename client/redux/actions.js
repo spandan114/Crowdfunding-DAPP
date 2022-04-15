@@ -40,3 +40,17 @@ export const projectsLoaded = (projects)=>{
         payload:projects
     }
 }
+
+export const newProjectContractsLoaded = (contract)=>{
+    return{
+        type:types.NEW_PROJECT_CONTRACT_LOADED,
+        payload:contract
+    }
+}
+
+export const newProjectsLoaded = (project)=>{
+    return{
+        type:types.NEW_PROJECT_LOADED,
+        payload:project
+    }
+}

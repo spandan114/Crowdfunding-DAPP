@@ -10,16 +10,17 @@ contract Crowdfunding{
 // [X] Get All project list
 // [X]  contribute amount
 
-event projectStarted(
+event ProjectStarted(
     address projectContractAddress ,
     address creator,
-    uint256 minimumContribution,
-    uint256 deadline,
-    uint256 targetContribution,
-    uint256 raisedAmount,
+    uint256 minContribution,
+    uint256 projectDeadline,
+    uint256 goalAmount,
+    uint256 currentAmount,
     uint256 noOfContributors,
-    string projectTitle,
-    string projectDesc
+    string title,
+    string desc,
+    uint256 currentState
 );
 
 event ContributionReceived(
@@ -46,7 +47,7 @@ event ContributionReceived(
    Project newProject = new Project(msg.sender,minimumContribution,deadline,targetContribution,projectTitle,projectDesc);
    projects.push(newProject);
  
- emit projectStarted(
+ emit ProjectStarted(
     address(newProject) ,
     msg.sender,
     minimumContribution,
@@ -55,7 +56,8 @@ event ContributionReceived(
     0,
     0,
     projectTitle,
-    projectDesc
+    projectDesc,
+    0
  );
 
  }

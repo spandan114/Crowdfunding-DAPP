@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import { startFundRaising } from '../redux/interactions'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,6 +9,8 @@ const FundRiserForm = () => {
 
     const crowdFundingContract = useSelector(state=>state.fundingReducer.contract)
     const account = useSelector(state=>state.web3Reducer.account)
+    const web3 = useSelector(state=>state.web3Reducer.connection)
+
     const dispatch = useDispatch()
 
     const [title,setTitle] = useState("")
@@ -17,6 +19,7 @@ const FundRiserForm = () => {
     const [minimumContributionAmount,setMinimumContributionAmount] = useState("")
     const [deadline,setDeadline] = useState("")
     const [btnLoading,setBtnLoading] = useState(false)
+
 
     const riseFund = (e) =>{
        e.preventDefault();
@@ -47,7 +50,7 @@ const FundRiserForm = () => {
         account:account
        }
 
-       startFundRaising(crowdFundingContract,data,onSuccess,onError)
+       startFundRaising(web3,crowdFundingContract,data,onSuccess,onError,dispatch)
     }
 
   return (

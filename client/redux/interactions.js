@@ -2,7 +2,7 @@ import Web3 from "web3";
 import * as actions from "./actions";
 import CrowdFunding from '../artifacts/contracts/Crowdfunding.sol/Crowdfunding.json'
 import Project from '../artifacts/contracts/Project.sol/Project.json'
-import { projectDataFormatter} from "../helper/helper";
+import { groupContributors, projectDataFormatter} from "../helper/helper";
 
 const crowdFundingContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
@@ -93,6 +93,19 @@ export const contribute = async(crowdFundingContract,data,dispatch,onSuccess,onE
   .on('error', function(error){ 
     onError(error.message)
   })
+}
+
+export const getContributors = async (web3,contractAddress,onSuccess,onError) =>{
+  try {
+    var projectConnector = new web3.eth.Contract(Project.abi,contractAddress);
+    const getContributions = await projectConnector.getPastEvents("FundingReceived",{
+      fromBlock: 0,
+      toBlock: 'latest'
+    })
+    onSuccess(groupContributors(getContributions))
+  } catch (error) {
+    onError(error)
+  }
 }
 
 // Listen to contract events 

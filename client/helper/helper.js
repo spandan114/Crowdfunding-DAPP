@@ -1,6 +1,7 @@
 
 import moment from "moment";
 import web3 from "web3";
+import _ from 'lodash';
 
 export const weiToEther = (num) =>{
     return web3.utils.fromWei(num, 'ether')
@@ -31,4 +32,20 @@ export const projectDataFormatter = (data,contractAddress) =>{
     progress:Math.round((Number(weiToEther(data.currentAmount))/Number(weiToEther(data.goalAmount)))*100)
   }
   return formattedData;
+}
+
+const formatContribution = (contributions) =>{
+  const formattedData = contributions.map(data=>{
+    return {
+      contributor:data.returnValues.contributor,
+      amount:Number(weiToEther(data.returnValues.amount))
+    }
+  })
+  return formattedData;
+}
+
+export const groupContributors = (contributions) => {
+  const contributorList = formatContribution(contributions);
+  const contributorGroup = _.map(_.groupBy(contributorList, 'contributor'), (o,address) => { return { contributor: address,amount: _.sumBy(o,'amount') }})
+  return contributorGroup;
 }

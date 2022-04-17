@@ -30,7 +30,7 @@ const FundRiserCard = ({props}) => {
       return;
     }
 
-    // setBtnLoader(projectId)
+    setBtnLoader(projectId)
     const contributionAmount = etherToWei(amount);
 
     const data = {

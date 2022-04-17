@@ -45,7 +45,7 @@ contract Project{
     mapping (address => uint) public contributiors;
     mapping (uint256 => WithdrawRequest) public withdrawRequests;
 
-    uint256 numOfWithdrawRequests = 0;
+    uint256 public numOfWithdrawRequests = 0;
 
     // Modifiers
     modifier isCreator(){
@@ -210,7 +210,8 @@ contract Project{
     uint256 currentAmount, 
     string memory title,
     string memory desc,
-    State currentState  
+    State currentState,
+    uint256 balance  
     ){
         projectStarter=creator;
         minContribution=minimumContribution;
@@ -221,6 +222,7 @@ contract Project{
         title=projectTitle;
         desc=projectDes;
         currentState=state;
+        balance=address(this).balance;
     }
 
 }

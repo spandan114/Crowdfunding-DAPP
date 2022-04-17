@@ -49,3 +49,13 @@ export const groupContributors = (contributions) => {
   const contributorGroup = _.map(_.groupBy(contributorList, 'contributor'), (o,address) => { return { contributor: address,amount: _.sumBy(o,'amount') }})
   return contributorGroup;
 }
+
+export const withdrawRequestDataFormatter = (data) =>{
+  return{
+     totalVote:data.noOfVotes,
+     amount:weiToEther(data.amount),
+     status:data.isCompleted?"Completed":"Pending",
+     desc:data.description,
+     reciptant:data.reciptent
+    }
+}

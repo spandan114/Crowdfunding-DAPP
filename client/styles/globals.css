@@ -56,3 +56,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     top: 0;
     width: auto;
   }
+
+  .withdraw-button{
+    @apply border bg-emerald-500 text-white rounded-md p-2 mt-1  font-bold hover:bg-emerald-600 active:bg-emerald-700 focus:outline-none focus:ring focus:ring-emerald-300;
+  }

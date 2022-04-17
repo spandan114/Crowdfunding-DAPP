@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import FundRiserCard from '../../components/FundRiserCard'
 import Loader from '../../components/Loader'
 import authWrapper from '../../helper/authWrapper'
-import { getContributors } from '../../redux/interactions'
+import { getAllWithdrawRequest, getContributors } from '../../redux/interactions'
 
 const ProjectDetails = () => {
 
@@ -15,9 +15,10 @@ const ProjectDetails = () => {
   const filteredProject = projectsList?.filter(data =>  data.address === id)
 
   const [contributors, setContributors] = useState(null)
+  const [withdrawReq, setWithdrawReq] = useState(null)
 
   useEffect(() => {
-    if(filteredProject){
+    if(id){
 
       const onSuccess = (data) =>{
         setContributors(data)
@@ -27,8 +28,13 @@ const ProjectDetails = () => {
       }
 
       getContributors(web3,id,onSuccess,onError)
+
+      const loadWithdrawRequests = (data) =>{
+        setWithdrawReq(data)
+      }
+      getAllWithdrawRequest(web3,id,loadWithdrawRequests)
     }
-  }, [filteredProject])
+  }, [id])
   
 
   return (
@@ -40,6 +46,20 @@ const ProjectDetails = () => {
           :
           <Loader/>
         }
+
+        <div>
+          {
+            withdrawReq?
+              withdrawReq.length > 0?
+                <div>
+                  <h1 className="font-sans text-xl text-gray font-semibold">Withdraw requests</h1>
+                </div>
+              :<p>Withdraw requests not found</p>
+            :<Loader/>
+          }
+          
+        </div>
+
     </div>
     <div className="card lg:w-5/12 h-screen my-4 overflow-y-hidden hover:overflow-y-auto">
         <h1 className="font-sans font-bold text-xl">All contributors</h1>
@@ -58,7 +78,7 @@ const ProjectDetails = () => {
                 </div>
               ))
               :<p>Contributors not found</p>
-            :"Loading..."
+            :<Loader/>
         }
 
     </div>

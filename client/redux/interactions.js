@@ -2,7 +2,7 @@ import Web3 from "web3";
 import * as actions from "./actions";
 import CrowdFunding from '../artifacts/contracts/Crowdfunding.sol/Crowdfunding.json'
 import Project from '../artifacts/contracts/Project.sol/Project.json'
-import { groupContributors, projectDataFormatter} from "../helper/helper";
+import { groupContributors, projectDataFormatter, withdrawRequestDataFormatter} from "../helper/helper";
 
 const crowdFundingContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
@@ -95,6 +95,7 @@ export const contribute = async(crowdFundingContract,data,dispatch,onSuccess,onE
   })
 }
 
+// Get all contributors by contract address
 export const getContributors = async (web3,contractAddress,onSuccess,onError) =>{
   try {
     var projectConnector = new web3.eth.Contract(Project.abi,contractAddress);
@@ -108,13 +109,31 @@ export const getContributors = async (web3,contractAddress,onSuccess,onError) =>
   }
 }
 
-// Listen to contract events 
-//WARN: No working
-// export const listenCrowdFundingEvents = (crowdFundingContract,dispatch) =>{
-//     crowdFundingContract.events.ProjectStarted({},(err,event)=>{
-//       if(err){
-//         console.log(err)
-//       }
-//       console.log(event)
-//     })
-// }
+// Request for withdraw amount
+export const createWithdrawRequest = async (web3,contractAddress,data,onSuccess,onError) =>{
+  const {description,amount,recipient,account} = data;
+    var projectConnector = new web3.eth.Contract(Project.abi,contractAddress);
+    await projectConnector.methods.createWithdrawRequest(description,amount,recipient).send({from:account})
+    .on('receipt', function(receipt){
+      console.log(receipt)
+      onSuccess()
+    })
+    .on('error', function(error){ 
+      onError(error.message)
+    })
+}
+
+// Get all withdraw request
+export const getAllWithdrawRequest = async (web3,contractAddress,onLoadRequest) =>{
+  var projectConnector = new web3.eth.Contract(Project.abi,contractAddress);
+  var withdrawRequestCount = 0
+  //await projectConnector.methods.numOfWithdrawRequests().call();
+  var withdrawRequests = [];
+  for(var i=0;i<=withdrawRequestCount;i++){
+    console.log(i)
+    const req = await projectConnector.methods.withdrawRequests(i).call();
+    withdrawRequests.push(withdrawRequestDataFormatter(req));
+  }
+  onLoadRequest(withdrawRequests)
+}
+

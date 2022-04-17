@@ -28,7 +28,7 @@ export const projectDataFormatter = (data,contractAddress) =>{
     currentAmount:weiToEther(data.currentAmount),
     state:state[Number(data.currentState)],
     deadline:unixToDate(Number(data.projectDeadline)),
-    progress:(Number(weiToEther(data.currentAmount))/Number(weiToEther(data.goalAmount)))*100
+    progress:Math.round((Number(weiToEther(data.currentAmount))/Number(weiToEther(data.goalAmount)))*100)
   }
   return formattedData;
 }

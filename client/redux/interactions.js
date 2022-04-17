@@ -2,16 +2,18 @@ import Web3 from "web3";
 import * as actions from "./actions";
 import CrowdFunding from '../artifacts/contracts/Crowdfunding.sol/Crowdfunding.json'
 import Project from '../artifacts/contracts/Project.sol/Project.json'
-import { projectDataFormatter } from "../helper/helper";
+import { projectDataFormatter} from "../helper/helper";
 
 const crowdFundingContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
+//Load web3 
 export const loadWeb3 = async (dispatch) => {
   const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
   dispatch(actions.web3Loaded(web3));
   return web3;
 };
 
+// Load connected wallet
 export const loadAccount = async (web3, dispatch) => {
   const account = await web3.eth.getAccounts();
   const network = await web3.eth.net.getId();
@@ -24,12 +26,14 @@ export const loadAccount = async (web3, dispatch) => {
   return account;
 };
 
+//Connect with crowd funding contract
 export const loadCrowdFundingContract = async(web3,dispatch) =>{
   const crowdFunding = new web3.eth.Contract(CrowdFunding.abi,crowdFundingContractAddress);
   dispatch(actions.crowdFundingContractLoaded(crowdFunding));
   return crowdFunding;
 }
 
+// Start fund raising project
 export const startFundRaising = async(web3,CrowdFundingContract,data,onSuccess,onError,dispatch) =>{
   const {minimumContribution,deadline,targetContribution,projectTitle,projectDesc,account} = data;
 
@@ -55,6 +59,9 @@ export const startFundRaising = async(web3,CrowdFundingContract,data,onSuccess,o
   })
 }
 
+// 1 - Get all funding project address
+// 2 - Connect with funding project contract
+// 3 - Get project details 
 export const getAllFunding = async(CrowdFundingContract,web3,dispatch) =>{
    
   const fundingProjectList = await CrowdFundingContract.methods.returnAllProjects().call()
@@ -64,13 +71,10 @@ export const getAllFunding = async(CrowdFundingContract,web3,dispatch) =>{
 
    await Promise.all(fundingProjectList.map(async (data)=>{
     var projectConnector = new web3.eth.Contract(Project.abi,data);
-
     const details = await projectConnector.methods.getProjectDetails().call()
     projectContracts.push(projectConnector);
-
     const formattedProjectData = projectDataFormatter(details,data)
     projects.push(formattedProjectData)
-
    }))
 
    dispatch(actions.projectContractsLoaded(projectContracts));
@@ -78,12 +82,26 @@ export const getAllFunding = async(CrowdFundingContract,web3,dispatch) =>{
 
 }
 
-export const subscribeCrowdFundingEvents = (crowdFundingContract,dispatch) =>{
-    crowdFundingContract.events.ProjectStarted({},(err,event)=>{
-      if(err){
-        console.log(err)
-      }
-      console.log(event)
-      // dispatch(orderCanceled(event));
-    })
+// Contribute in fund raising project
+export const contribute = async(crowdFundingContract,data,dispatch,onSuccess,onError) =>{
+  const {contractAddress,amount,account} = data;
+  await crowdFundingContract.methods.contribute(contractAddress).send({from:account,value:amount})
+  .on('receipt', function(receipt){
+    dispatch(actions.amountContributor({projectId:contractAddress,amount:amount}))
+    onSuccess()
+  })
+  .on('error', function(error){ 
+    onError(error.message)
+  })
 }
+
+// Listen to contract events 
+//WARN: No working
+// export const listenCrowdFundingEvents = (crowdFundingContract,dispatch) =>{
+//     crowdFundingContract.events.ProjectStarted({},(err,event)=>{
+//       if(err){
+//         console.log(err)
+//       }
+//       console.log(event)
+//     })
+// }

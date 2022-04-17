@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { weiToEther } from "../helper/helper";
 import * as types from "./types";
 const initialState = {};
 
@@ -55,6 +56,19 @@ export const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         projects: [...state.projects,action.payload],
+      };
+    case types.INCREASE_PROGRESS:
+      const {projectId,amount} = action.payload;
+      var updatedState = state.projects.map(data=>{
+        if(data.address === projectId){
+          data["progress"]=Math.round(((Number(data.currentAmount)+Number(weiToEther(amount)))/Number(data.goalAmount))*100)
+        }
+        return data
+      })
+
+      return {
+        ...state,
+        projects: updatedState,
       };
     default:
       return state;

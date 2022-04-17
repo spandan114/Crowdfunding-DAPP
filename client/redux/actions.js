@@ -54,3 +54,10 @@ export const newProjectsLoaded = (project)=>{
         payload:project
     }
 }
+
+export const amountContributor = (data)=>{
+    return{
+        type:types.INCREASE_PROGRESS,
+        payload:data
+    }
+}

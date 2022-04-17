@@ -3,6 +3,7 @@ import React,{useEffect,useState} from 'react'
 import { useSelector } from 'react-redux'
 import FundRiserCard from '../../components/FundRiserCard'
 import Loader from '../../components/Loader'
+import WithdrawRequestCard from '../../components/WithdrawRequestCard'
 import authWrapper from '../../helper/authWrapper'
 import { getAllWithdrawRequest, getContributors } from '../../redux/interactions'
 
@@ -53,6 +54,12 @@ const ProjectDetails = () => {
               withdrawReq.length > 0?
                 <div>
                   <h1 className="font-sans text-xl text-gray font-semibold">Withdraw requests</h1>
+                  {
+                    withdrawReq.map((data,i)=>(
+                      <WithdrawRequestCard props={data} contractAddress={id} key={i}/>
+                    ))
+                  }
+                  
                 </div>
               :<p>Withdraw requests not found</p>
             :<Loader/>

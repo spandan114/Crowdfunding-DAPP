@@ -22,6 +22,7 @@ export const state = ["Fundraising","Expired","Successful"];
 export const projectDataFormatter = (data,contractAddress) =>{
   const formattedData = {
     address:contractAddress,
+    contractBalance:weiToEther(data.balance),
     title:data.title,
     description:data.desc,
     minContribution:weiToEther(data.minContribution),
@@ -52,6 +53,7 @@ export const groupContributors = (contributions) => {
 
 export const withdrawRequestDataFormatter = (data) =>{
   return{
+     requestId:data.requestId,
      totalVote:data.noOfVotes,
      amount:weiToEther(data.amount),
      status:data.isCompleted?"Completed":"Pending",

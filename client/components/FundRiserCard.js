@@ -108,7 +108,7 @@ const FundRiserCard = ({props}) => {
           :
           <>
             <p className="text-md font-bold font-sans text-gray">Contract balance</p>
-            <p className="text-sm font-bold font-sans text-gray-600 ">{props.goalAmount} ETH </p>
+            <p className="text-sm font-bold font-sans text-gray-600 ">{props.contractBalance} ETH </p>
             <label className="text-sm text-gray-700 font-semibold">Withdraw request :</label>
             <div className="flex flex-row">
               <input type="number" placeholder="Type here" value={amount} onChange={(e)=>setAmount(e.target.value)} disabled={btnLoader === props.address} className="input rounded-l-md" />

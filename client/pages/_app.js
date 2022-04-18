@@ -5,7 +5,9 @@ import { ToastContainer } from 'react-toastify';
 import {wrapper} from '../redux/store'
 import { useDispatch } from 'react-redux';
 import { getAllFunding, loadAccount, loadCrowdFundingContract, loadWeb3, subscribeCrowdFundingEvents } from '../redux/interactions';
-
+import { Router } from 'next/router';
+import NProgress from 'nprogress'
+import "nprogress/nprogress.css";
 
 function MyApp({ Component, pageProps }) {
 
@@ -22,6 +24,11 @@ function MyApp({ Component, pageProps }) {
       const crowdFundingContract = await loadCrowdFundingContract(web3,dispatch)
       await getAllFunding(crowdFundingContract,web3,dispatch)
   }
+
+  Router.events.on("routeChangeStart",()=> NProgress.start())
+  Router.events.on("routeChangeComplete",()=> NProgress.done())
+  Router.events.on("routeChangeError",()=> NProgress.done())
+  
   
   return (
     <>

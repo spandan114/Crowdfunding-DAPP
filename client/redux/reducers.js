@@ -65,7 +65,18 @@ export const projectReducer = (state = initialState, action) => {
         }
         return data
       })
-
+      return {
+        ...state,
+        projects: updatedState,
+      };
+    case types.WITHDRAW_BALANCE:
+      const {contractAddress,withdrawAmount} = action.payload;
+      var updatedState = state.projects.map(data=>{
+        if(data.address === contractAddress){
+          data["contractBalance"]=(Number(data.contractBalance)-Number(withdrawAmount))
+        }
+        return data
+      })
       return {
         ...state,
         projects: updatedState,

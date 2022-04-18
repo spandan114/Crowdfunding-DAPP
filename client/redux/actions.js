@@ -61,3 +61,10 @@ export const amountContributor = (data)=>{
         payload:data
     }
 }
+
+export const withdrawContractBalance = (data)=>{
+    return{
+        type:types.WITHDRAW_BALANCE,
+        payload:data
+    }
+}

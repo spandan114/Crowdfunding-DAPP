@@ -15,7 +15,7 @@ const colorMaker = (state) =>{
     }
 }
 
-const FundRiserCard = ({props}) => {
+const FundRiserCard = ({props,pushWithdrawRequests}) => {
 
   const [btnLoader, setBtnLoader] = useState(false)
   const [amount, setAmount] = useState(0)
@@ -61,9 +61,12 @@ const FundRiserCard = ({props}) => {
       recipient:account,
       account:account
     }
-    const onSuccess = () =>{
+    const onSuccess = (data) =>{
       setBtnLoader(false)
       setAmount(0)
+      if(pushWithdrawRequests){
+        pushWithdrawRequests(data)
+      }
       toastSuccess(`Successfully requested for withdraw ${amount} ETH`)
     }
     const onError = (message) =>{
@@ -109,13 +112,21 @@ const FundRiserCard = ({props}) => {
           <>
             <p className="text-md font-bold font-sans text-gray">Contract balance</p>
             <p className="text-sm font-bold font-sans text-gray-600 ">{props.contractBalance} ETH </p>
-            <label className="text-sm text-gray-700 font-semibold">Withdraw request :</label>
-            <div className="flex flex-row">
-              <input type="number" placeholder="Type here" value={amount} onChange={(e)=>setAmount(e.target.value)} disabled={btnLoader === props.address} className="input rounded-l-md" />
-              <button className="button" onClick={()=>requestForWithdraw(props.address)}>
-                {btnLoader === props.address?"Loading...":"Withdraw"}
-              </button>
-            </div>
+
+            {
+              props.creator === account?
+              <>
+              <label className="text-sm text-gray-700 font-semibold">Withdraw request :</label>
+              <div className="flex flex-row">
+                <input type="number" placeholder="Type here" value={amount} onChange={(e)=>setAmount(e.target.value)} disabled={btnLoader === props.address} className="input rounded-l-md" />
+                <button className="button" onClick={()=>requestForWithdraw(props.address)}>
+                  {btnLoader === props.address?"Loading...":"Withdraw"}
+                </button>
+              </div>
+            </>
+            :""
+            }
+
           </>
         }
       </div>

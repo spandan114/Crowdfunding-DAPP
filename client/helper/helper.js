@@ -22,6 +22,7 @@ export const state = ["Fundraising","Expired","Successful"];
 export const projectDataFormatter = (data,contractAddress) =>{
   const formattedData = {
     address:contractAddress,
+    creator:data?.projectStarter,
     contractBalance: data.balance?weiToEther(data.balance):0,
     title:data.title,
     description:data.desc,

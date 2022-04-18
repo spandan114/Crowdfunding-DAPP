@@ -37,13 +37,20 @@ const ProjectDetails = () => {
     }
   }, [id])
   
+  const pushWithdrawRequests = (data) =>{
+    if(withdrawReq){
+      setWithdrawReq([...withdrawReq,data])
+    }else{
+      setWithdrawReq([data])
+    }
+  }
 
   return (
     <div className="px-2 py-4 flex flex-col lg:px-12 lg:flex-row ">
     <div className="lg:w-7/12 my-2 lg:my-0 lg:mx-2">
         {
           filteredProject?
-            <FundRiserCard props={filteredProject[0]}/>
+            <FundRiserCard props={filteredProject[0]} pushWithdrawRequests={pushWithdrawRequests}/>
           :
           <Loader/>
         }
@@ -56,7 +63,7 @@ const ProjectDetails = () => {
                   <h1 className="font-sans text-xl text-gray font-semibold">Withdraw requests</h1>
                   {
                     withdrawReq.map((data,i)=>(
-                      <WithdrawRequestCard props={data} contractAddress={id} key={i}/>
+                      <WithdrawRequestCard props={data} withdrawReq={withdrawReq} setWithdrawReq={setWithdrawReq} contractAddress={id} key={i}/>
                     ))
                   }
                   

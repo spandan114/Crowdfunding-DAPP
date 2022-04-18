@@ -46,9 +46,6 @@ export const startFundRaising = async(web3,CrowdFundingContract,data,onSuccess,o
     const formattedProjectData = projectDataFormatter(projectsReceipt,contractAddress)
     var projectConnector = new web3.eth.Contract(Project.abi,contractAddress);
 
-    console.log(formattedProjectData)
-    console.log(projectConnector)
-
     dispatch(actions.newProjectContractsLoaded(projectConnector));
     dispatch(actions.newProjectsLoaded(formattedProjectData));
 

@@ -42,7 +42,7 @@ event ContributionReceived(
     string memory projectDesc
  ) public {
 
-   deadline = block.timestamp+deadline;
+   deadline = deadline;
 
    Project newProject = new Project(msg.sender,minimumContribution,deadline,targetContribution,projectTitle,projectDesc);
    projects.push(newProject);

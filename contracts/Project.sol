@@ -211,7 +211,7 @@ contract Project{
     string memory title,
     string memory desc,
     State currentState,
-    uint256 balance  
+    uint256 balance
     ){
         projectStarter=creator;
         minContribution=minimumContribution;

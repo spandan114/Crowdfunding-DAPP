@@ -43,7 +43,7 @@ const FundRiserForm = () => {
 
        const data = {
         minimumContribution:etherToWei(minimumContributionAmount),
-        deadline:unixDate,
+        deadline:Number(unixDate),
         targetContribution:etherToWei(targetedContributionAmount),
         projectTitle:title,
         projectDesc:description,

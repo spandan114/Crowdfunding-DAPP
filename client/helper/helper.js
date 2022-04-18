@@ -36,6 +36,24 @@ export const projectDataFormatter = (data,contractAddress) =>{
   return formattedData;
 }
 
+
+const formatProjectContributions = (contributions) =>{
+  const formattedData = contributions.map(data=>{
+    return {
+      projectAddress:data.returnValues.projectAddress,
+      contributor:data.returnValues.contributor,
+      amount:Number(weiToEther(data.returnValues.contributedAmount))
+    }
+  })
+  return formattedData;
+}
+
+export const groupContributionByProject = (contributions) => {
+  const contributionList = formatProjectContributions(contributions);
+  //const contributionGroupByProject = _.map(_.groupBy(contributionList, 'projectAddress'), (o,projectAddress,address) => { return {projectAddress:projectAddress, contributor: address,amount: _.sumBy(o,'amount') }})
+  return contributionList;
+}
+
 const formatContribution = (contributions) =>{
   const formattedData = contributions.map(data=>{
     return {

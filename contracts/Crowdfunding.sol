@@ -26,7 +26,7 @@ event ProjectStarted(
 event ContributionReceived(
    address projectAddress,
    uint256 contributedAmount,
-   address contributor
+   address indexed contributor
 );
 
  Project[] private projects;

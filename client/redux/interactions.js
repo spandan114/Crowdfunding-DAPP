@@ -2,7 +2,7 @@ import Web3 from "web3";
 import * as actions from "./actions";
 import CrowdFunding from '../artifacts/contracts/Crowdfunding.sol/Crowdfunding.json'
 import Project from '../artifacts/contracts/Project.sol/Project.json'
-import { groupContributors, projectDataFormatter, withdrawRequestDataFormatter} from "../helper/helper";
+import { groupContributionByProject, groupContributors, projectDataFormatter, withdrawRequestDataFormatter} from "../helper/helper";
 
 const crowdFundingContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
@@ -170,5 +170,14 @@ export const withdrawAmount = async (web3,dispatch,data,onSuccess,onError) =>{
   .on('error', function(error){ 
     onError(error.message)
   })
+}
 
+//Get my contributions
+export const getMyContributionList = async(crowdFundingContract,account) =>{
+  const getContributions = await crowdFundingContract.getPastEvents("ContributionReceived",{
+    filter: { contributor: account },
+    fromBlock: 0,
+    toBlock: 'latest'
+  })
+  return groupContributionByProject(getContributions);
 }

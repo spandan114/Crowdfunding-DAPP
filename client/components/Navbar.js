@@ -1,9 +1,11 @@
 import {useState} from 'react'
 import Link from "next/link";
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
 
+    const router = useRouter()
     const [openMenu,setOpenMenu] = useState(false);
     const account = useSelector(state=>state.web3Reducer.account)
 
@@ -26,12 +28,8 @@ const Navbar = () => {
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                 <div className="flex space-x-4">
-                    <Link href="/dashboard"  ><span className="bg-[#F7C984] text-greay px-3 py-2 rounded-md text-sm font-medium hover:cursor-pointer">Dashboard</span></Link>
-
-                    <a href="#" className="text-greay hover:bg-[#F7C984] hover:text-greay px-3 py-2 rounded-md text-sm font-medium">My contribution </a>
-
-                    <a href="#" className="text-greay hover:bg-[#F7C984] hover:text-greay px-3 py-2 rounded-md text-sm font-medium">My fund raising</a>
-
+                    <Link href="/dashboard"  ><span className={`${router.pathname === "/dashboard"?"bg-[#F7C984]":""} text-greay px-3 py-2 rounded-md text-sm font-medium hover:cursor-pointer hover:bg-[#F7C984] hover:text-greay`}>Dashboard</span></Link>
+                    <Link href="/my-contributions"><span className={`${router.pathname === "/my-contributions"?"bg-[#F7C984]":""} text-greay px-3 py-2 rounded-md text-sm font-medium hover:cursor-pointer hover:bg-[#F7C984] hover:text-greay`}>My contribution</span></Link>
                 </div>
                 </div>
             </div>

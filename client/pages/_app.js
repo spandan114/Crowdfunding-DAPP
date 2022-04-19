@@ -8,6 +8,7 @@ import { getAllFunding, loadAccount, loadCrowdFundingContract, loadWeb3, subscri
 import { Router } from 'next/router';
 import NProgress from 'nprogress'
 import "nprogress/nprogress.css";
+import { chainOrAccountChangedHandler } from '../helper/helper';
 
 function MyApp({ Component, pageProps }) {
 
@@ -28,6 +29,13 @@ function MyApp({ Component, pageProps }) {
   Router.events.on("routeChangeStart",()=> NProgress.start())
   Router.events.on("routeChangeComplete",()=> NProgress.done())
   Router.events.on("routeChangeError",()=> NProgress.done())
+  
+  useEffect(() => {
+    // listen for account changes
+    window.ethereum.on('accountsChanged', chainOrAccountChangedHandler);
+    // Listen for chain change
+    window.ethereum.on('chainChanged', chainOrAccountChangedHandler);
+  }, [])
   
   
   return (

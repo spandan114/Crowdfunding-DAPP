@@ -80,3 +80,24 @@ export const withdrawRequestDataFormatter = (data) =>{
      reciptant:data.reciptent
     }
 }
+
+export const connectWithWallet = async (onSuccess) => {
+  //connect web3 with http provider
+  if (window.ethereum) {
+   window.ethereum.request({method:"eth_requestAccounts"})
+   .then(res=>{
+    onSuccess()
+   }).catch(error=>{
+     alert(error.message)
+   })
+  } else {
+    window.alert(
+      "Non-Ethereum browser detected. You should consider trying MetaMask!"
+    );
+  }
+};
+
+export const chainOrAccountChangedHandler = () => {
+  // reload the page to avoid any errors with chain or account change.
+  window.location.reload();
+}

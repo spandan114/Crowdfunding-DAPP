@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { connectWithWallet } from '../helper/helper';
@@ -16,6 +17,18 @@ export default function Home() {
     }
     connectWithWallet(onSuccess)
   }
+
+  useEffect(() => {
+     (async()=>{
+      if(web3){
+        const account = await loadAccount(web3,dispatch)
+        if(account.length > 0){
+          router.push('/dashboard')
+        }
+      }
+     })()
+  }, [web3])
+  
 
   return (
     <div className="flex flex-col items-center justify-center my-40">

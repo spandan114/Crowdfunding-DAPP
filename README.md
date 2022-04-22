@@ -20,7 +20,7 @@ https://user-images.githubusercontent.com/55044734/164529677-27af29f2-96d6-4ce6-
 | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
 | [Next.js](https://nextjs.org/docs/getting-started)                  | For building frontend                                                 |
 | [solidity](https://docs.soliditylang.org/en/v0.8.13/)               | For writting smart contracts                                          |
-| [tailwind css](https://tailwindcss.com/docs/installation)           | A utility-first CSS framework                                         |       
+| [tailwind css](https://tailwindcss.com/docs/installation)           | For building design                                                   |       
 | [ether.js](https://docs.ethers.io/v5/)                              | Web3 client (contract testing ).                                      |
 | [web3.js](https://www.npmjs.com/package/web3)                       | Web3 client (Frontend Next.js).                                       |
 | [Chai](https://www.npmjs.com/package/chai)                          | javascript testing framework.                                         |

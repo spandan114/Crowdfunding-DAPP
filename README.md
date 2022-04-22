@@ -4,8 +4,8 @@ https://user-images.githubusercontent.com/55044734/164529677-27af29f2-96d6-4ce6-
 
 ### Project features :bulb:
 
-- [x] User can start a fund riser.
-- [x] Anyone can contribute amount.
+- [x] User can start a fundraising.
+- [x] Anyone can contribute.
 - [x] End project if targeted contribution amount reached.
 - [x] Expire project if targeted amount not fulfills between deadline.
 - [x] Contributors can withdraw contributed amount if project expire.

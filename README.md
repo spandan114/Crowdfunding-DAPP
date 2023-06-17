@@ -41,16 +41,22 @@ https://user-images.githubusercontent.com/55044734/164529677-27af29f2-96d6-4ce6-
     ```
     npx hardhat test
     ```
+- Connect HardHat Account to Metamask
+
+https://github.com/Thiru-Malai/Crowdfunding-DAPP/assets/73980589/f694a9ef-a035-4f2a-9763-98c90839e2b9
+
 - Deploy contract in local hardhat node
     ```
     npx hardhat run scripts/deploy.js --network localhost
     ```
-- Connect hardhat with metamask
 - Run Next.js frontend
     ```
     cd client
     npm run dev
     ```
+- Connect account to  website
+
+
 ### Web3.js 
 ------------
 - [Load web3](https://web3js.readthedocs.io/en/v1.2.11/web3-eth.html#web3-eth)
